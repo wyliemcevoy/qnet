@@ -5,26 +5,32 @@
 #include <mutex>
 #include <condition_variable>
 
+
+
 template <typename T>
 class TaskQueue
 {
 public:
 
-
 	T pop() {
+		T t;
 		{
-			std::lock_guard<mutex> lock(mut_);
-			cond_.wait(lock, [&] {return !queue_.empty()});
-			auto t = queue.front();
+			std::unique_lock<std::mutex> lock(mut_);
+			while (! queue_.empty()) {
+				//cond_.wait(lock, [&queue_ = queue_] {return !queue_.empty(); });
+				cond_.wait(lock);
+			}
+
+			t = queue_.front();
 			queue_.pop();
 		}
-
 		return t;
+
 	}
 	void push(const T& t)
 	{
 		{
-			std::lock_guard<mutex> lock(mut_);
+			std::lock_guard<std::mutex> lock(mut_);
 			queue_.push(t);
 		}
 		cond_.notify_one();
@@ -32,7 +38,7 @@ public:
 	void push(T&& t)
 	{
 		{
-			std::lock_guard<mutex> lock(mut_);
+			std::lock_guard<std::mutex> lock(mut_);
 			queue_.push(t);
 		}
 		cond_.notify_one();

@@ -136,9 +136,13 @@
   <ItemGroup>
     <ClInclude Include="neural_net.h" />
     <ClInclude Include="task_queue.h" />
+    <ClInclude Include="thread_pool.h" />
+    <ClInclude Include="worker_thread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="neural_net.cpp" />
+    <ClCompile Include="thread_pool.cpp" />
+    <ClCompile Include="worker_thread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
