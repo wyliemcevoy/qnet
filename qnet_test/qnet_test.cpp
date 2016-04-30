@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "neural_net.h"
+#include "thread_pool.h"
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -62,9 +63,9 @@ int m()
 std::mutex mute;
 std::condition_variable work_available;
 
-const int foo_size = 1000000;
+const int foo_size = 10000;
 int foo[foo_size];
-int num_executions = 1000;
+int num_executions = 1;
 
 
 void fill_foo()
@@ -80,6 +81,7 @@ void single_thread_work()
 	for (int i = 0; i < foo_size; i++)
 	{
 		foo[i] = foo[i] + 1;
+		std::this_thread::sleep_for(std::chrono::microseconds(100));
 	}
 }
 
@@ -130,13 +132,17 @@ int main()
 
 	fill_foo();
 
+	ThreadPool pool(7,foo, foo_size);
+
 	//start clock
 	begin = clock();
 
 	for (int i = 0; i < num_executions; i++)
 	{
-		multi_thread_work();
+		pool.QueueWork();
 	}
+
+	
 
 	end = clock();
 
@@ -149,5 +155,7 @@ int main()
 
 	std::cout << "Press any key to exit." << std::endl;
 	std::cin.get();
+	
+	pool.join();
 	return 0;
 }

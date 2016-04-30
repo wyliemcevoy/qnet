@@ -7,16 +7,15 @@
 
 
 
-template <typename T>
 class TaskQueue
 {
 public:
 
-	T pop() {
-		T t;
+	int pop() {
+		int t;
 		{
 			std::unique_lock<std::mutex> lock(mut_);
-			while (! queue_.empty()) {
+			while (queue_.empty()) {
 				//cond_.wait(lock, [&queue_ = queue_] {return !queue_.empty(); });
 				cond_.wait(lock);
 			}
@@ -27,7 +26,7 @@ public:
 		return t;
 
 	}
-	void push(const T& t)
+	void push(int t)
 	{
 		{
 			std::lock_guard<std::mutex> lock(mut_);
@@ -35,17 +34,19 @@ public:
 		}
 		cond_.notify_one();
 	}
-	void push(T&& t)
+	/*
+	int size()
 	{
+		int result;
 		{
-			std::lock_guard<std::mutex> lock(mut_);
-			queue_.push(t);
+			std::lock_guard<std::mutex> guard(mut_);
+			result = queue_.size();
 		}
-		cond_.notify_one();
+		return result;
 	}
-
+	*/
 private:
-	std::queue<T> queue_;
+	std::queue<int> queue_;
 	std::mutex mut_;
 	std::condition_variable cond_;
 };
