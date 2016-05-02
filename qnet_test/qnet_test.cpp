@@ -63,10 +63,11 @@ int m()
 std::mutex mute;
 std::condition_variable work_available;
 
-const int foo_size = 10000;
+const int foo_size = 1000;
 int foo[foo_size];
-int num_executions = 1;
-
+int num_executions = 10;
+int delay = 1000;
+int thread_count = 1;
 
 void fill_foo()
 {
@@ -76,38 +77,18 @@ void fill_foo()
 	}
 }
 
-void single_thread_work()
+void single_thread_work(int milisecond_delay)
 {
 	for (int i = 0; i < foo_size; i++)
 	{
 		foo[i] = foo[i] + 1;
-		std::this_thread::sleep_for(std::chrono::microseconds(100));
+		std::this_thread::sleep_for(std::chrono::microseconds(milisecond_delay));
 	}
+	std::thread::id this_id = std::this_thread::get_id();
+	std::cout << "Thread " << this_id << " done with task " << 0 << " to " << foo_size << std::endl;
+
 }
 
-void thread_work(int start_index, int end_index)
-{
-	for (int i = start_index; i <= end_index; i++)
-	{
-		foo[i] = foo[i] + 1;
-	}
-}
-
-
-void multi_thread_work()
-{
-	std::thread one(thread_work, 0, 199999);
-	std::thread two(thread_work, 200000, 399999);
-	std::thread three(thread_work, 400000, 599999);
-	std::thread four(thread_work, 600000, 799999);	
-	std::thread five(thread_work, 800000, 999999);
-
-	one.join();
-	two.join();
-	three.join();
-	four.join();
-	five.join();
-}
 
 int main()
 {
@@ -120,7 +101,7 @@ int main()
 
 	for (int i = 0; i < num_executions; i++)
 	{
-		single_thread_work();
+		single_thread_work(delay);
 	}
 
 	clock_t end = clock();
@@ -132,7 +113,7 @@ int main()
 
 	fill_foo();
 
-	ThreadPool pool(7,foo, foo_size);
+	ThreadPool pool(thread_count);
 
 	//start clock
 	begin = clock();
@@ -141,7 +122,6 @@ int main()
 	{
 		pool.QueueWork();
 	}
-
 	
 
 	end = clock();
@@ -152,10 +132,12 @@ int main()
 
 	double ratio = single_elapsed_secs / multi_elapsed_secs;
 	std::cout << "\t" << ratio << " times as fast." << std::endl;
+	
+	pool.RequestStop();
 
 	std::cout << "Press any key to exit." << std::endl;
 	std::cin.get();
 	
-	pool.join();
+	
 	return 0;
 }

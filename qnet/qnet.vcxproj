@@ -135,7 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="neural_net.h" />
-    <ClInclude Include="task_queue.h" />
     <ClInclude Include="thread_pool.h" />
     <ClInclude Include="worker_thread.h" />
   </ItemGroup>
