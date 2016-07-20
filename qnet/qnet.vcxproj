@@ -134,16 +134,20 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="input_layer.h" />
     <ClInclude Include="layer.h" />
     <ClInclude Include="neural_net.h" />
-    <ClInclude Include="PerceptronLayer.h" />
+    <ClInclude Include="output_layer.h" />
+    <ClInclude Include="perceptron_layer.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="thread_pool.h" />
     <ClInclude Include="worker_thread.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="input_layer.cpp" />
     <ClCompile Include="neural_net.cpp" />
-    <ClCompile Include="PerceptronLayer.cpp" />
+    <ClCompile Include="output_layer.cpp" />
+    <ClCompile Include="perceptron_layer.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="thread_pool.cpp" />
     <ClCompile Include="worker_thread.cpp" />

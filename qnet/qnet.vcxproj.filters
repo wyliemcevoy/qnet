@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Layers">
+      <UniqueIdentifier>{dd2c5beb-5415-4080-b068-d48792f8fa9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Layers">
+      <UniqueIdentifier>{94e6d2d5-a167-4ae3-a67d-f2f1b0b0c1b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -31,10 +37,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="layer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="PerceptronLayer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="perceptron_layer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="output_layer.h">
+      <Filter>Header Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="input_layer.h">
+      <Filter>Header Files\Layers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +62,14 @@
     <ClCompile Include="Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PerceptronLayer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="output_layer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="input_layer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="perceptron_layer.cpp">
+      <Filter>Source Files\Layers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
