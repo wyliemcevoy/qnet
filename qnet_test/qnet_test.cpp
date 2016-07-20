@@ -17,6 +17,18 @@ bool ready = false;
 bool processed = false;
 
 
+
+
+
+int main()
+{
+	std::cout << "" << std::endl;
+	std::cout << "Press enter to quit." << std::endl;
+	std::cin.get();
+}
+
+
+
 void worker_thread()
 {
 	std::unique_lock<std::mutex> lock(mut);
@@ -90,7 +102,7 @@ void single_thread_work(int milisecond_delay)
 }
 
 
-int main()
+int main2()
 {
 
 	// Build foo array

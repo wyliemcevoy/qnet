@@ -1,12 +1,14 @@
 #include "neural_net.h"
 
-
-
-NeuralNet::NeuralNet()
+namespace qnet
 {
-}
+
+	NeuralNet::NeuralNet()
+	{
+	}
 
 
-NeuralNet::~NeuralNet()
-{
+	NeuralNet::~NeuralNet()
+	{
+	}
 }
